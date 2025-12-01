@@ -8,21 +8,39 @@ public class PlayerController : MonoBehaviour
     private const string ANIMATOR_HORIZONTAL = "Horizontal";
     private const string ANIMATOR_VERTICAL = "Vertical";
     private const string ANIMATOR_SHOOTING = "Shooting";
+    private const string CAMERA_LOOK = "Look";
 
     private Animator animator;
     private PlayerInput playerInput;
+    private Rigidbody rb;
+    [SerializeField] private float cameraSensitivity;
+    [SerializeField] private float speed;
+    [SerializeField] private Transform followTarget;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         Vector2 leftStickInput = playerInput.actions[MOVEMENT_ACTION_NAME].ReadValue<Vector2>();
+        
         animator.SetFloat(ANIMATOR_HORIZONTAL, leftStickInput.x);
         animator.SetFloat(ANIMATOR_VERTICAL, leftStickInput.y);
+        
+        Vector3 movement = ((transform.forward * leftStickInput.y) + (transform.right * leftStickInput.x)) * speed;
+        rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, movement.z);
+    }
+
+    private void LateUpdate()
+    {
+        Vector2 lookInput = playerInput.actions[CAMERA_LOOK].ReadValue<Vector2>();
+        
+        followTarget.localEulerAngles += new Vector3(lookInput.y * cameraSensitivity * Time.deltaTime, 0, 0);
+        transform.eulerAngles += new Vector3(0, lookInput.x * cameraSensitivity * Time.deltaTime, 0);
     }
 
     public void Shoot(InputAction.CallbackContext context)
