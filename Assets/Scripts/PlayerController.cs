@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform followTarget;
     [SerializeField] private float lerpSpeed;
+    [SerializeField] private Weapon weapon;
 
     private void Awake()
     {
@@ -53,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
+        weapon.Shoot();
+        
         if (context.phase == InputActionPhase.Started)
         {
             animator.SetBool(ANIMATOR_SHOOTING, true);
@@ -63,4 +66,13 @@ public class PlayerController : MonoBehaviour
             animator.SetBool(ANIMATOR_SHOOTING, false);
         }
     }
+
+    public void Reload(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            // reload
+            weapon.Reload();
+        }
+    } 
 }
