@@ -3695,7 +3695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 393764980}
-  bulletPrefab: {fileID: 5023826200671335053, guid: 268835a9aa3bd4a4187d180e1e380827, type: 3}
+  bulletPrefab: {fileID: 8164797845554474395, guid: 268835a9aa3bd4a4187d180e1e380827, type: 3}
   fireRate: 1
   currentBullets: 30
   maxMagazine: 30
