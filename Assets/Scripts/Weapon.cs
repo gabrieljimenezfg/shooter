@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -13,6 +14,8 @@ public class Weapon : MonoBehaviour
 
     // muzzle flash, damage
     // Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+    
+    public static event Action OnAmmoChanged;
 
     public void Shoot()
     {
@@ -34,6 +37,7 @@ public class Weapon : MonoBehaviour
         }
 
         currentBullets--;
+        OnAmmoChanged?.Invoke();
     }
 
     public void Reload()
@@ -49,5 +53,10 @@ public class Weapon : MonoBehaviour
             currentBullets += totalBullets;
             totalBullets = 0;
         }
+        OnAmmoChanged?.Invoke();
     }
+
+    public string MagazineBullets => currentBullets + "/" + maxMagazine;
+
+    public string TotalBullets => totalBullets.ToString();
 }

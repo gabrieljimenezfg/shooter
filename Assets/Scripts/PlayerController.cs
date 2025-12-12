@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,16 +9,17 @@ public class PlayerController : MonoBehaviour
     private const string ANIMATOR_HORIZONTAL = "Horizontal";
     private const string ANIMATOR_VERTICAL = "Vertical";
     private const string ANIMATOR_SHOOTING = "Shooting";
+    private const string ANIMATOR_RELOAD = "Reload";
     private const string CAMERA_LOOK = "Look";
 
     private Animator animator;
     private PlayerInput playerInput;
     private Rigidbody rb;
+
     [SerializeField] private float cameraSensitivity;
     [SerializeField] private float speed;
     [SerializeField] private Transform followTarget;
     [SerializeField] private float lerpSpeed;
-    [SerializeField] private Weapon weapon;
 
     private void Awake()
     {
@@ -52,10 +54,15 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles += new Vector3(0, lookInput.x * cameraSensitivity * Time.deltaTime, 0);
     }
 
+    private Weapon GetEquippedWeapon()
+    {
+        return GameManager.Instance.GetEquippedWeapon();
+    }
+
     public void Shoot(InputAction.CallbackContext context)
     {
-        weapon.Shoot();
-        
+        GetEquippedWeapon().Shoot();
+
         if (context.phase == InputActionPhase.Started)
         {
             animator.SetBool(ANIMATOR_SHOOTING, true);
@@ -71,8 +78,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            // reload
-            weapon.Reload();
+            GetEquippedWeapon().Reload();
+            animator.SetTrigger(ANIMATOR_RELOAD);
         }
-    } 
+    }
 }

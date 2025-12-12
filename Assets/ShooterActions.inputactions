@@ -35,7 +35,7 @@
                 {
                     "name": "Reload",
                     "type": "Button",
-                    "id": "a2df58c7-92bf-4071-aef8-36c235c05654",
+                    "id": "375a2d6d-d9e5-416b-8b74-c52e99c61e34",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -144,7 +144,7 @@
                 },
                 {
                     "name": "",
-                    "id": "c873afbb-1e0b-47d3-b10c-f7379b6e4569",
+                    "id": "bab8e80c-2feb-42e3-835b-346ab434862a",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
