@@ -1266,7 +1266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b0023fb33209245839eea02a995391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
 --- !u!4 &431627999
 Transform:
   m_ObjectHideFlags: 0
@@ -3697,7 +3696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 393764980}
   bulletPrefab: {fileID: 5023826200671335053, guid: 268835a9aa3bd4a4187d180e1e380827, type: 3}
-  fireRate: 0
+  fireRate: 1
   currentBullets: 30
   maxMagazine: 30
   totalBullets: 120

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private const string MOVEMENT_ACTION_NAME = "Move";
+    private const string RELOAD_INPUT = "Reload";
+    private const string SHOOT_INPUT = "Shoot";
     private const string ANIMATOR_HORIZONTAL = "Horizontal";
     private const string ANIMATOR_VERTICAL = "Vertical";
     private const string ANIMATOR_SHOOTING = "Shooting";
@@ -61,16 +63,18 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        GetEquippedWeapon().Shoot();
-
         if (context.phase == InputActionPhase.Started)
         {
+            GetEquippedWeapon().TriggerPressed();
             animator.SetBool(ANIMATOR_SHOOTING, true);
+            playerInput.actions[RELOAD_INPUT].Disable();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
+            GetEquippedWeapon().TriggerReleased();
             animator.SetBool(ANIMATOR_SHOOTING, false);
+            playerInput.actions[RELOAD_INPUT].Enable();
         }
     }
 
@@ -80,6 +84,13 @@ public class PlayerController : MonoBehaviour
         {
             GetEquippedWeapon().Reload();
             animator.SetTrigger(ANIMATOR_RELOAD);
+            playerInput.actions[SHOOT_INPUT].Disable();
         }
+    }
+
+    public void EnableShootAction()
+    {
+        Debug.Log("nunca");
+        playerInput.actions[SHOOT_INPUT].Enable();
     }
 }
