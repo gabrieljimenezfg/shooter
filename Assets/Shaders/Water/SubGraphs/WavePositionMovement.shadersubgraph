@@ -18,7 +18,11 @@
     ],
     "m_Keywords": [],
     "m_Dropdowns": [],
-    "m_CategoryData": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "fab5a2db3e2346c29cd0818fc5d24e1c"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "8e0692fd16b74426bcf1fd8df84cbcc0"
@@ -278,7 +282,7 @@
     "m_Hidden": false,
     "m_Value": {
         "x": 0.0,
-        "y": 0.0,
+        "y": 1.0,
         "z": 0.0,
         "w": 0.0
     }
@@ -365,10 +369,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 8.000152587890625,
-            "y": -167.50001525878907,
-            "width": 0.0,
-            "height": 0.0
+            "x": -47.00006103515625,
+            "y": -202.0,
+            "width": 153.00001525878907,
+            "height": 34.00001525878906
         }
     },
     "m_Slots": [
@@ -579,7 +583,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.0,
+    "m_Value": 2.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -594,10 +598,10 @@
     "m_Guid": {
         "m_GuidSerialized": "c0b6c40b-41a7-447c-bc99-aa8b12e0e3a5"
     },
-    "m_Name": "Vector3",
+    "m_Name": "ObjectPosition",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Vector3",
-    "m_DefaultReferenceName": "_Vector3",
+    "m_RefNameGeneratedByDisplayName": "ObjectPosition",
+    "m_DefaultReferenceName": "_ObjectPosition",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -760,10 +764,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -722.9998168945313,
-            "y": -0.4999847412109375,
-            "width": 0.0,
-            "height": 0.0
+            "x": -784.0001220703125,
+            "y": -35.0,
+            "width": 139.0,
+            "height": 33.999996185302737
         }
     },
     "m_Slots": [
@@ -845,10 +849,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -442.9998779296875,
-            "y": 197.50001525878907,
-            "width": 0.0,
-            "height": 0.0
+            "x": -456.0,
+            "y": 242.00001525878907,
+            "width": 132.0,
+            "height": 34.00001525878906
         }
     },
     "m_Slots": [
@@ -1058,7 +1062,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.0,
+    "m_Value": 1.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1071,7 +1075,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
     "m_ObjectId": "cdd0e1580af342b9ac9ab5664b4b8501",
     "m_Id": 0,
-    "m_DisplayName": "Vector3",
+    "m_DisplayName": "ObjectPosition",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1167,10 +1171,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -572.9998168945313,
-            "y": -47.99998474121094,
+            "x": -571.0000610351563,
+            "y": -51.999996185302737,
             "width": 230.0,
-            "height": 95.0
+            "height": 279.0000305175781
         }
     },
     "m_Slots": [
@@ -1183,7 +1187,7 @@
     ],
     "synonyms": [],
     "m_Precision": 0,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {
@@ -1191,13 +1195,36 @@
     },
     "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"6f17abda3d121d6468484b195c9328da\",\n        \"type\": 3\n    }\n}",
     "m_PropertyGuids": [
-        "65305243-b1b5-4e36-9d73-8df8e14846e2"
+        "65305243-b1b5-4e36-9d73-8df8e14846e2",
+        "7d49f77f-8b10-4f84-a47d-fc8db04209cd"
     ],
     "m_PropertyIds": [
-        835573898
+        835573898,
+        1916289915
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "fab5a2db3e2346c29cd0818fc5d24e1c",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "cb5ec594f57148449d87ebdf8c806ad2"
+        },
+        {
+            "m_Id": "62fc6cd8c61c45b3937885ca7cac10fc"
+        },
+        {
+            "m_Id": "6bc635cec1f244eebbaa6165a9e66503"
+        },
+        {
+            "m_Id": "12ee1f3a005440568b1a6f5fcb1f75d4"
+        }
+    ]
 }
 
 {

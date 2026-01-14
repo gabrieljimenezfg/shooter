@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform followTarget;
     [SerializeField] private float lerpSpeed;
 
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -92,5 +93,10 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("nunca");
         playerInput.actions[SHOOT_INPUT].Enable();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        GameManager.Instance.GetGameData.CurrentLife -= damage;
     }
 }

@@ -36,9 +36,6 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (timePassedSinceLastShot < fireRate) return;
-        if (currentBullets <= 0) return;
-
         Ray ray = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)); // 0,0 es la esquina inferior izquierda
         RaycastHit hit;
 
@@ -57,6 +54,18 @@ public class Weapon : MonoBehaviour
         currentBullets--;
         timePassedSinceLastShot = 0f;
         OnAmmoChanged?.Invoke();
+    }
+
+    public void EnemyShoot(Transform target)
+    {
+        if (timePassedSinceLastShot < fireRate) return;
+        if (currentBullets <= 0) return;
+        
+        var bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var direction = ((target.position + new Vector3(0, 1.4f, 0)) - bulletSpawnPoint.position).normalized;
+        bulletClone.GetComponent<Rigidbody>().linearVelocity = direction * bulletSpeed;
+        timePassedSinceLastShot = 0f;
+        currentBullets--;
     }
 
     public void TriggerPressed()

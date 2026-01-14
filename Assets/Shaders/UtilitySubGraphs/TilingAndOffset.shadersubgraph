@@ -9,7 +9,11 @@
     ],
     "m_Keywords": [],
     "m_Dropdowns": [],
-    "m_CategoryData": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "c4c73c8d355d44b0a756014d1b6a6d6b"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "e2cb6b346ba04673a8494f6d5ba9c63c"
@@ -230,7 +234,7 @@
     "m_Hidden": false,
     "m_Value": {
         "x": 0.0,
-        "y": 0.0,
+        "y": 1.0,
         "z": 0.0,
         "w": 0.0
     }
@@ -470,6 +474,18 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "c4c73c8d355d44b0a756014d1b6a6d6b",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "6598850389a0411f80127f60fa39c721"
+        }
+    ]
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "c866208f13154e0cbbb8c0c271551fb3",
     "m_Group": {
@@ -574,10 +590,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 374.99993896484377,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 343.0,
+            "y": -169.0,
+            "width": 120.0,
+            "height": 77.0
         }
     },
     "m_Slots": [
@@ -608,10 +624,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -220.9998779296875,
-            "y": -7.750007629394531,
-            "width": 0.0,
-            "height": 0.0
+            "x": -237.0,
+            "y": -44.0,
+            "width": 139.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
