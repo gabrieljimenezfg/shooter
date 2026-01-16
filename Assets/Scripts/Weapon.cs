@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Weapon : MonoBehaviour
 
     private float timePassedSinceLastShot;
     private bool isTriggerPressed;
+
+    public UnityEvent EnemyReload;
 
     // muzzle flash, damage
     // Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
@@ -59,8 +62,12 @@ public class Weapon : MonoBehaviour
     public void EnemyShoot(Transform target)
     {
         if (timePassedSinceLastShot < fireRate) return;
-        if (currentBullets <= 0) return;
-        
+        if (currentBullets <= 0)
+        {
+            EnemyReload?.Invoke();
+            return;
+        };
+
         var bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         var direction = ((target.position + new Vector3(0, 1.4f, 0)) - bulletSpawnPoint.position).normalized;
         bulletClone.GetComponent<Rigidbody>().linearVelocity = direction * bulletSpeed;

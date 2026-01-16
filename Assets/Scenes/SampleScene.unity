@@ -3551,6 +3551,21 @@ MonoBehaviour:
   totalBullets: 120
   bulletSpeed: 1000
   automatic: 0
+  EnemyReload:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 485736118}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: ReloadWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1476311723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4021,6 +4036,9 @@ MonoBehaviour:
   totalBullets: 120
   bulletSpeed: 1000
   automatic: 0
+  EnemyReload:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1961710835
 PrefabInstance:
   m_ObjectHideFlags: 0

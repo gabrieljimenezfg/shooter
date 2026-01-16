@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.Died += PlayerDied;
+    }
+
     private void Update()
     {
         Vector2 leftStickInput = playerInput.actions[MOVEMENT_ACTION_NAME].ReadValue<Vector2>();
@@ -88,6 +93,13 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(ANIMATOR_RELOAD);
             playerInput.actions[SHOOT_INPUT].Disable();
         }
+    }
+
+    private void PlayerDied()
+    {
+        var ragdollPrefab = Resources.Load("SwatRagdoll");
+        Instantiate(ragdollPrefab, transform.position, transform.rotation);
+        gameObject.SetActive(false);
     }
 
     public void TakeDamage(float damage)

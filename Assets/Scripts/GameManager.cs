@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameData gameData;
 
     public event Action<float, float> HealthUpdated;
+    public event Action Died;
 
     [SerializeField] private float healingSpeed;
     [SerializeField] private float timeToStartHealing;
@@ -60,6 +61,10 @@ public class GameManager : MonoBehaviour
         if (gameData.CurrentLife >= 0)
         {
             healingCoroutine = StartCoroutine(nameof(Heal));
+        }
+        else
+        {
+            Died?.Invoke();
         }
 
         HealthUpdated?.Invoke(gameData.CurrentLife, gameData.MaxLife);

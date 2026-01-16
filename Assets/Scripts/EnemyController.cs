@@ -6,13 +6,15 @@ public class EnemyController : MonoBehaviour
 {
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     private static readonly int Hit = Animator.StringToHash("Hit");
+    private static readonly int Reload = Animator.StringToHash("Reload");
 
     const string PLAYER_TAG = "Player";
     private bool playerDetected;
+    private bool reloading;
     private Animator animator;
     private Transform player;
     private NavMeshAgent agent;
-    
+
     [SerializeField] private Weapon weapon;
     [SerializeField] private Transform[] patrolPoints;
     private int patrolIndex;
@@ -43,10 +45,10 @@ public class EnemyController : MonoBehaviour
                 // shoot player
                 animator.SetFloat(Vertical, 0);
                 transform.LookAt(player);
-                weapon.EnemyShoot(player);
+                if (!reloading) weapon.EnemyShoot(player);
             }
         }
-        else
+        else if (patrolPoints.Length > 0)
         {
             animator.SetFloat(Vertical, 0.4f);
             agent.speed = speed * 0.5f;
@@ -61,6 +63,18 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ReloadWeapon()
+    {
+        reloading = true;
+        animator.SetTrigger(Reload);
+    }
+
+    public void FinishReload()
+    {
+        reloading = false;
+        weapon.Reload();  
     }
 
     private void OnTriggerStay(Collider other)
