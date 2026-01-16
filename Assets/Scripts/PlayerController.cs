@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform followTarget;
     [SerializeField] private float lerpSpeed;
 
+    public static event Action<float> TookDamage;
 
     private void Awake()
     {
@@ -89,14 +90,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableShootAction()
-    {
-        Debug.Log("nunca");
-        playerInput.actions[SHOOT_INPUT].Enable();
-    }
-
     public void TakeDamage(float damage)
     {
-        GameManager.Instance.GetGameData.CurrentLife -= damage;
+        TookDamage?.Invoke(damage);
     }
 }
