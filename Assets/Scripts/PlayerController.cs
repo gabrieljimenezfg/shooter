@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private static readonly int HoldingGrenade = Animator.StringToHash("HoldingGrenade");
     private const string MOVEMENT_ACTION_NAME = "Move";
     private const string RELOAD_INPUT = "Reload";
     private const string SHOOT_INPUT = "Shoot";
@@ -22,6 +23,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform followTarget;
     [SerializeField] private float lerpSpeed;
+    [SerializeField] private GameObject grenadePrefab;
+    [SerializeField] private float throwForce;
+
+    private LineRenderer lineRenderer;
+
+    [SerializeField] private Transform leftHand, rightHand, grenadeSpawnPoint;
 
     public static event Action<float> TookDamage;
 
@@ -35,6 +42,31 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.Died += PlayerDied;
+        lineRenderer = grenadeSpawnPoint.GetComponent<LineRenderer>();
+    }
+
+    private Vector3 GetGrenadeThrowDirection()
+    {
+        var throwDirection = (Camera.main.transform.forward + Vector3.up) * throwForce;
+        return throwDirection;
+    }
+
+    private void DrawGrenadeTrajectory()
+    {
+        if (lineRenderer.enabled)
+        {
+            var positionCount = 100;
+            var throwDirection = GetGrenadeThrowDirection();
+            lineRenderer.positionCount = positionCount;
+
+            for (int i = 0; i < positionCount; i++)
+            {
+                float t = i * 0.1f;
+                // MRUA
+                Vector3 position = grenadeSpawnPoint.position + throwDirection * t + 0.5f * Physics.gravity * t * t;
+                lineRenderer.SetPosition(i, position);
+            }
+        }
     }
 
     private void Update()
@@ -53,6 +85,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = ((transform.forward * leftStickInput.y) + (transform.right * leftStickInput.x)) * speed;
         rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, movement.z);
+
+        DrawGrenadeTrajectory();
     }
 
     private void LateUpdate()
@@ -105,5 +139,37 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         TookDamage?.Invoke(damage);
+    }
+
+    public void GrabGrenade()
+    {
+        GetEquippedWeapon().transform.parent = leftHand;
+        Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation, grenadeSpawnPoint);
+    }
+
+    public void LetGoOfGrenade()
+    {
+        lineRenderer.enabled = false;
+        var grenade = grenadeSpawnPoint.GetChild(0).transform;
+        grenade.parent = null;
+        var grenadeRigidbody = grenade.GetComponent<Rigidbody>();
+        var grenadeCollider = grenade.GetComponent<Collider>();
+        grenadeCollider.enabled = true;
+        grenadeRigidbody.isKinematic = false;
+        grenadeRigidbody.linearVelocity = GetGrenadeThrowDirection();
+    }
+
+    public void ThrowGrenade(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            animator.SetBool(HoldingGrenade, true);
+            lineRenderer.enabled = true;
+        }
+
+        if (context.canceled)
+        {
+            animator.SetBool(HoldingGrenade, false);
+        }
     }
 }
