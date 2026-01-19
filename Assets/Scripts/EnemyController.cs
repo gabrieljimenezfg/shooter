@@ -22,7 +22,6 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private float health = 100;
 
-
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -103,6 +102,7 @@ public class EnemyController : MonoBehaviour
             // death 
             GameObject ragdollPrefab = Resources.Load<GameObject>("EnemyRagdoll");
             Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            ragdollPrefab.GetComponent<Rigidbody>().linearVelocity = GetComponent<Rigidbody>().linearVelocity;
             gameObject.SetActive(false);
         }
         else

@@ -37,12 +37,12 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        lineRenderer = grenadeSpawnPoint.GetComponent<LineRenderer>();
     }
 
     private void Start()
     {
         GameManager.Instance.Died += PlayerDied;
-        lineRenderer = grenadeSpawnPoint.GetComponent<LineRenderer>();
     }
 
     private Vector3 GetGrenadeThrowDirection()
@@ -143,8 +143,6 @@ public class PlayerController : MonoBehaviour
 
     public void GrabGrenade()
     {
-        GetEquippedWeapon().transform.parent = leftHand;
-        Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation, grenadeSpawnPoint);
     }
 
     public void LetGoOfGrenade()
@@ -152,11 +150,15 @@ public class PlayerController : MonoBehaviour
         lineRenderer.enabled = false;
         var grenade = grenadeSpawnPoint.GetChild(0).transform;
         grenade.parent = null;
+
         var grenadeRigidbody = grenade.GetComponent<Rigidbody>();
         var grenadeCollider = grenade.GetComponent<Collider>();
+
         grenadeCollider.enabled = true;
         grenadeRigidbody.isKinematic = false;
         grenadeRigidbody.linearVelocity = GetGrenadeThrowDirection();
+
+        grenade.GetComponent<Grenade>().StartCountdown();
     }
 
     public void ThrowGrenade(InputAction.CallbackContext context)
@@ -165,6 +167,8 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool(HoldingGrenade, true);
             lineRenderer.enabled = true;
+            GetEquippedWeapon().transform.parent = leftHand;
+            Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation, grenadeSpawnPoint);
         }
 
         if (context.canceled)

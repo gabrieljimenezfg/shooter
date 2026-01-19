@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23022011092513436}
   - component: {fileID: 2588868045987372116}
   - component: {fileID: 968040201541168231}
+  - component: {fileID: 3391584978116094177}
   m_Layer: 0
   m_Name: grenade_lowpoly_prefab
   m_TagString: Untagged
@@ -138,3 +139,21 @@ CapsuleCollider:
   m_Height: 0.11290039
   m_Direction: 1
   m_Center: {x: -0.0009902306, y: 0.056450196, z: 0.00051543314}
+--- !u!114 &3391584978116094177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415556611663978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd68813b29fb8f42beb7e5ea07893ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionRadius: 5
+  damage: 100
+  timeToExplode: 3
+  explosionTimer: 0
+  knockBackForce: 10000
+  explosionPrefab: {fileID: 100012, guid: 3364c97de68d3a147af572d1c71c6455, type: 3}
