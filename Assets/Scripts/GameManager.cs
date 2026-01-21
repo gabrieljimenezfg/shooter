@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private const string SAVE_GAME_KEY = "SaveData";
     public static GameManager Instance;
     [SerializeField] private GameData gameData;
 
@@ -79,6 +80,33 @@ public class GameManager : MonoBehaviour
             gameData.CurrentLife = Mathf.Clamp(newLife, 0, gameData.MaxLife);
             HealthUpdated?.Invoke(gameData.CurrentLife, gameData.MaxLife);
             yield return null;
+        }
+    }
+
+
+    // TODO: Separate into save manager
+    public void SaveGame()
+    {
+        var data = JsonUtility.ToJson(gameData);
+        PlayerPrefs.SetString(SAVE_GAME_KEY, data);
+    }
+
+    public void LoadGame()
+    {
+        var serializedSave = PlayerPrefs.GetString(SAVE_GAME_KEY);
+
+        if (serializedSave != string.Empty)
+        {
+            gameData = JsonUtility.FromJson<GameData>(serializedSave);
+        }
+        else
+        {
+            gameData = new GameData
+            {
+                CurrentLife = 100,
+                MaxLife = 100,
+                EquippedWeaponIndex = 0,
+            };
         }
     }
 }

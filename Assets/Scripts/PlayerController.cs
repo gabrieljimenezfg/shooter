@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private const string MOVEMENT_ACTION_NAME = "Move";
     private const string RELOAD_INPUT = "Reload";
     private const string SHOOT_INPUT = "Shoot";
+    private const string THROW_UTILITY_INPUT = "ThrowUtility";
     private const string ANIMATOR_HORIZONTAL = "Horizontal";
     private const string ANIMATOR_VERTICAL = "Vertical";
     private const string ANIMATOR_SHOOTING = "Shooting";
@@ -42,7 +43,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.Died += PlayerDied;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Died += PlayerDied;
+        }
     }
 
     private Vector3 GetGrenadeThrowDirection()
@@ -125,7 +129,7 @@ public class PlayerController : MonoBehaviour
         {
             GetEquippedWeapon().Reload();
             animator.SetTrigger(ANIMATOR_RELOAD);
-            playerInput.actions[SHOOT_INPUT].Disable();
+            DisableAttackActions();
         }
     }
 
@@ -141,9 +145,6 @@ public class PlayerController : MonoBehaviour
         TookDamage?.Invoke(damage);
     }
 
-    public void GrabGrenade()
-    {
-    }
 
     public void LetGoOfGrenade()
     {
@@ -169,11 +170,32 @@ public class PlayerController : MonoBehaviour
             lineRenderer.enabled = true;
             GetEquippedWeapon().transform.parent = leftHand;
             Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation, grenadeSpawnPoint);
+            DisableAttackActions();
         }
 
         if (context.canceled)
         {
             animator.SetBool(HoldingGrenade, false);
         }
+    }
+
+    public void DisableAttackActions()
+    {
+        playerInput.actions[SHOOT_INPUT].Disable();
+        playerInput.actions[RELOAD_INPUT].Disable();
+        playerInput.actions[THROW_UTILITY_INPUT].Disable();
+    }
+
+    public void EnableAttackActions()
+    {
+        playerInput.actions[SHOOT_INPUT].Enable();
+        playerInput.actions[RELOAD_INPUT].Enable();
+        playerInput.actions[THROW_UTILITY_INPUT].Enable();
+    }
+
+    public void FinishGrenadeAnimation()
+    {
+        EnableAttackActions();
+        GetEquippedWeapon().transform.parent = rightHand;
     }
 }
