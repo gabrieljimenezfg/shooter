@@ -2072,6 +2072,8 @@ MonoBehaviour:
   fullscreenToggle: {fileID: 1055584247}
   musicVolumeSlider: {fileID: 664053396}
   sfxVolumeSlider: {fileID: 923028186}
+  applyButton: {fileID: 2103852905}
+  backButton: {fileID: 1213950562}
 --- !u!1 &923028184
 GameObject:
   m_ObjectHideFlags: 0
