@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
     public void FinishReload()
     {
         reloading = false;
-        weapon.Reload();  
+        weapon.Reload();
     }
 
     private void OnTriggerStay(Collider other)
@@ -109,6 +109,7 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("[EnemyController] Hit");
             animator.SetTrigger(Hit);
+            AudioManager.Instance.PlaySFX(null, transform.position);
         }
     }
 }
