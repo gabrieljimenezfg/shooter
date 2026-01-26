@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
             Vector3 bulletDirection = (hit.point - bulletSpawnPoint.position).normalized; // bullet spawn point
             Bullet bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
             bulletClone.GetComponent<Rigidbody>().linearVelocity = bulletDirection * bulletSpeed;
-            AudioManager.Instance.PlaySFX(null, bulletSpawnPoint.position);
+            // AudioManager.Instance.PlaySFX(null, bulletSpawnPoint.position);
             // TODO: vfx muzzle flash
         }
         else
