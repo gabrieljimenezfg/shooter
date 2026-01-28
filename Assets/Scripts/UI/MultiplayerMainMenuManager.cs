@@ -1,4 +1,5 @@
 using System;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 
 public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 {
+    private const string PLAYER_READY_KEY = "PlayerReady";
     [SerializeField] private GameObject panelLoading;
     [SerializeField] private GameObject panelWaitingInRoom;
     [SerializeField] private Button multiplayerStartButton;
@@ -28,7 +30,14 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
     private void HandlePlayerReadyButtonClick()
     {
-        Debug.Log("Player ready");
+        var hashTable = new Hashtable
+        {
+            {
+                PLAYER_READY_KEY, true
+            }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
     }
 
     private void HandleMultiplayerStartButtonClick()
@@ -45,10 +54,7 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
     private void HandleJoinRoomFail()
     {
-        PhotonNetwork.CreateRoom(null, new RoomOptions
-        {
-            MaxPlayers = maxPlayers,
-        });
+        CreateNewRoom();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -84,5 +90,44 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         PaintAllCurrentPlayers();
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (!changedProps.ContainsKey(PLAYER_READY_KEY)) return;
+
+        var allUsersAreReady = CheckIfAllUsersAreReady();
+
+        if (allUsersAreReady)
+        {
+            StartGame();
+        }
+    }
+
+    private void StartGame()
+    {
+        PhotonNetwork.LoadLevel(1);
+    }
+
+    private bool CheckIfAllUsersAreReady()
+    {
+        if (!PhotonNetwork.IsMasterClient) return false;
+        if (PhotonNetwork.CurrentRoom.PlayerCount != maxPlayers) return false;
+
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
+        {
+            var isReady = player.Value.CustomProperties.ContainsKey(PLAYER_READY_KEY);
+            if (!isReady) return false;
+        }
+
+        return true;
+    }
+
+    private void CreateNewRoom()
+    {
+        PhotonNetwork.CreateRoom(null, new RoomOptions
+        {
+            MaxPlayers = maxPlayers,
+        });
     }
 }
