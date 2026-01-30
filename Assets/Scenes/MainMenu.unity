@@ -5172,7 +5172,7 @@ MonoBehaviour:
   playerReadyButton: {fileID: 786318990}
   usersText: {fileID: 1841660281}
   nicknameInput: {fileID: 554201180}
-  maxPlayers: 4
+  maxPlayers: 2
 --- !u!4 &1746730612
 Transform:
   m_ObjectHideFlags: 0
@@ -5775,7 +5775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1860103820
 MonoBehaviour:
   m_ObjectHideFlags: 0
