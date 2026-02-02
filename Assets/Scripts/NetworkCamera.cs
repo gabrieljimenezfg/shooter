@@ -5,6 +5,8 @@ public class NetworkCamera : MonoBehaviour
 {
     private Transform player;
     [SerializeField] private Vector3 cameraOffset;
+    
+    public Vector3 CameraOffset => cameraOffset;
 
     private void LateUpdate()
     {
