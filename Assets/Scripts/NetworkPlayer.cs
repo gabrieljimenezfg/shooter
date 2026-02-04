@@ -1,5 +1,7 @@
 using System;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +16,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Rigidbody rb;
     [SerializeField] private Bullet bullet;
     [SerializeField] private Transform bulletSpawnPoint;
+    private float hp;
 
     private void Awake()
     {
@@ -32,6 +35,14 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(hp);
+        }
+        else
+        {
+            hp = (float)stream.ReceiveNext();
+        }
     }
 
     private void HandleMovement()
@@ -100,6 +111,60 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
                 bulletSpawnPoint.rotation);
             var rb = bulletInstance.GetComponent<Rigidbody>();
             rb.linearVelocity = bulletInstance.transform.forward * 0.1f;
+        }
+    }
+
+    // TODO: move to network bullet 
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (photonView.IsMine)
+        {
+            if (other.gameObject.TryGetComponent<EnemyController>(out var enemy))
+            {
+                // enemy.TakeDamage(10, photonView.Owner);
+            }
+        }
+    }
+
+
+    // TODO: move to network enemy
+    void TakeDamage(float damage, Player player)
+    {
+        hp -= damage;
+
+        if (hp <= 0)
+        {
+            int playerDeathsInt;
+            if (player.CustomProperties.TryGetValue("DeathCount", out var playerDeathsObject))
+            {
+                playerDeathsInt = (int)playerDeathsObject;
+                playerDeathsInt++;
+            }
+            else
+            {
+                playerDeathsInt = 1;
+            }
+
+            var playerDeathHashTable = new Hashtable
+            {
+                {
+                    "DeathCount", playerDeathsInt
+                }
+            };
+            player.SetCustomProperties(playerDeathHashTable);
+        }
+        else
+        {
+             // take damage
+        }
+    }
+
+    void CheckDeathCount()
+    {
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            PhotonNetwork.CurrentRoom.Players[i].CustomProperties.TryGetValue("DeathCount", out var deathCount);
         }
     }
 }
