@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lerpSpeed;
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private float throwForce;
+    [SerializeField] private Transform spineBone;
+    [SerializeField] private float spineOffset;
 
     private LineRenderer lineRenderer;
 
@@ -99,6 +101,11 @@ public class PlayerController : MonoBehaviour
 
         followTarget.localEulerAngles += new Vector3(lookInput.y * cameraSensitivity * Time.deltaTime, 0, 0);
         transform.eulerAngles += new Vector3(0, lookInput.x * cameraSensitivity * Time.deltaTime, 0);
+        // spineBone.localEulerAngles +=
+        //     new Vector3((lookInput.y * cameraSensitivity * Time.deltaTime) + spineOffset, 0, 0);
+        spineBone.localEulerAngles =
+            new Vector3(followTarget.localEulerAngles.x + spineOffset, spineBone.localEulerAngles.y,
+                spineBone.localEulerAngles.z);
     }
 
     private Weapon GetEquippedWeapon()

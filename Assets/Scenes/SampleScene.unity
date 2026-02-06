@@ -255,6 +255,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26082059}
   m_CullTransparentMesh: 1
+--- !u!4 &65104210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3329934405426400604, guid: aa294f304c19faf41a04017a70da9c06, type: 3}
+  m_PrefabInstance: {fileID: 5172950335998871341}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &121884544
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &186772036
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -5706,8 +5711,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781561202}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.124844976, y: 0.0011346596, z: -0.00014277367, w: 0.99217564}
-  m_LocalPosition: {x: 0.7283122, y: 1.998127, z: -2.1580431}
+  m_LocalRotation: {x: 0.30716562, y: 0.37543914, z: -0.13340026, w: 0.86423326}
+  m_LocalPosition: {x: 44.535934, y: 3.3684988, z: 24.48017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8206,6 +8211,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230436736139809114, guid: aa294f304c19faf41a04017a70da9c06, type: 3}
+      propertyPath: spineBone
+      value: 
+      objectReference: {fileID: 65104210}
+    - target: {fileID: 230436736139809114, guid: aa294f304c19faf41a04017a70da9c06, type: 3}
+      propertyPath: spineOffset
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2874367499895021666, guid: aa294f304c19faf41a04017a70da9c06, type: 3}
       propertyPath: m_Name
       value: Swat
