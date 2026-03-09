@@ -11,14 +11,18 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
     private const string PLAYER_READY_KEY = "PlayerReady";
     [SerializeField] private GameObject panelLoading;
     [SerializeField] private GameObject panelWaitingInRoom;
+    [SerializeField] private Button soloStartButton;
     [SerializeField] private Button multiplayerStartButton;
     [SerializeField] private Button playerReadyButton;
     [SerializeField] private TextMeshProUGUI usersText;
     [SerializeField] private TMP_InputField nicknameInput;
-    [SerializeField] private int maxPlayers;
+    [SerializeField] private TMP_Dropdown maxPlayersDropdown;
+    private int maxPlayers;
+    private bool isSoloPlay;
 
     private void Awake()
     {
+        soloStartButton.onClick.AddListener(HandleSoloStartButtonClick);
         multiplayerStartButton.onClick.AddListener(HandleMultiplayerStartButtonClick);
         playerReadyButton.onClick.AddListener(HandlePlayerReadyButtonClick);
     }
@@ -39,9 +43,18 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
     }
+    
+    private void HandleSoloStartButtonClick()
+    {
+        panelLoading.SetActive(true);
+        PhotonNetwork.NickName = nicknameInput.text;
+        PhotonNetwork.ConnectUsingSettings(); // connect to photon server, calls back to OnConnectedToMaster
+        isSoloPlay = true;
+    }
 
     private void HandleMultiplayerStartButtonClick()
     {
+        if (!nicknameInput) return;
         panelLoading.SetActive(true);
         PhotonNetwork.NickName = nicknameInput.text;
         PhotonNetwork.ConnectUsingSettings(); // connect to photon server, calls back to OnConnectedToMaster
@@ -49,7 +62,14 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinRandomRoom(); // calls back to OnJoinRandomFailed or OnJoinedRoom
+        if (isSoloPlay)
+        {
+            CreateNewRoom();
+        }
+        else
+        {
+            PhotonNetwork.JoinRandomRoom(); // calls back to OnJoinRandomFailed or OnJoinedRoom
+        }
     }
 
     private void HandleJoinRoomFail()
@@ -78,6 +98,12 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        if (isSoloPlay)
+        {
+            StartGame();
+            return;
+        }
+        
         panelWaitingInRoom.SetActive(true);
         PaintAllCurrentPlayers();
     }
@@ -125,6 +151,7 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
 
     private void CreateNewRoom()
     {
+        maxPlayers = isSoloPlay ? 1 : maxPlayersDropdown.value;
         PhotonNetwork.CreateRoom(null, new RoomOptions
         {
             MaxPlayers = maxPlayers,
