@@ -5,6 +5,9 @@ public class BaseEnemy : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
+        if (other.TryGetComponent(out NetworkPlayer player))
+        {
+            Debug.Log("Player Hit");
+        }
     }
 }

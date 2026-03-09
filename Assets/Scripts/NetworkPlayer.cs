@@ -14,7 +14,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float speed;
     private NetworkCamera networkCamera;
     private Rigidbody rb;
-    [SerializeField] private Bullet bullet;
+    [SerializeField] private NetworkBullet bullet;
     [SerializeField] private Transform bulletSpawnPoint;
     private float hp;
     [SerializeField] private bool offline;
@@ -98,9 +98,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     private void NetworkShoot()
     {
-        var bulletInstance = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        var rb = bulletInstance.GetComponent<Rigidbody>();
-        rb.linearVelocity = bulletInstance.transform.forward * 1f;
+        Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
     }
 
     /// <summary>

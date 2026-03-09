@@ -76,8 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  bullet: {fileID: 8164797845554474395, guid: 64c0f58b55d797a499f5422c8660cb66, type: 3}
+  bullet: {fileID: 2737480231236760070, guid: 64c0f58b55d797a499f5422c8660cb66, type: 3}
   bulletSpawnPoint: {fileID: 8252340670954527260}
+  offline: 1
 --- !u!114 &5977911148305610616
 MonoBehaviour:
   m_ObjectHideFlags: 0
