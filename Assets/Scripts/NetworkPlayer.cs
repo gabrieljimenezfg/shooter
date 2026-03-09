@@ -91,7 +91,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         if (ctx.performed)
         {
-            PerformRPC(nameof(NetworkShoot), RpcTarget.All);
+            this.PerformRPC(nameof(NetworkShoot), RpcTarget.All);
         }
     }
 
@@ -169,18 +169,6 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             PhotonNetwork.CurrentRoom.Players[i].CustomProperties.TryGetValue("DeathCount", out var deathCount);
-        }
-    }
-
-    private void PerformRPC(string methodName, RpcTarget target, params object[] parameters)
-    {
-        if (PhotonNetwork.OfflineMode)
-        {
-            SendMessage(methodName, SendMessageOptions.RequireReceiver);
-        }
-        else
-        {
-            photonView.RPC(methodName, target, parameters);
         }
     }
 }
