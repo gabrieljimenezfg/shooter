@@ -17,9 +17,15 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Bullet bullet;
     [SerializeField] private Transform bulletSpawnPoint;
     private float hp;
+    [SerializeField] private bool offline;
 
     private void Awake()
     {
+        if (offline)
+        {
+            PhotonNetwork.OfflineMode = true;
+        }
+
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
     }
@@ -85,7 +91,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         if (ctx.performed)
         {
-            photonView.RPC(nameof(NetworkShoot), RpcTarget.All);
+            PerformRPC(nameof(NetworkShoot), RpcTarget.All);
         }
     }
 
@@ -156,7 +162,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-             // take damage
+            // take damage
         }
     }
 
@@ -165,6 +171,18 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             PhotonNetwork.CurrentRoom.Players[i].CustomProperties.TryGetValue("DeathCount", out var deathCount);
+        }
+    }
+
+    private void PerformRPC(string methodName, RpcTarget target, params object[] parameters)
+    {
+        if (PhotonNetwork.OfflineMode)
+        {
+            SendMessage(methodName, SendMessageOptions.RequireReceiver);
+        }
+        else
+        {
+            photonView.RPC(methodName, target, parameters);
         }
     }
 }

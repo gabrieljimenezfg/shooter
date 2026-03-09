@@ -47,9 +47,9 @@ public class MultiplayerMainMenuManager : MonoBehaviourPunCallbacks
     private void HandleSoloStartButtonClick()
     {
         panelLoading.SetActive(true);
-        PhotonNetwork.NickName = nicknameInput.text;
-        PhotonNetwork.ConnectUsingSettings(); // connect to photon server, calls back to OnConnectedToMaster
         isSoloPlay = true;
+        PhotonNetwork.NickName = nicknameInput.text;
+        PhotonNetwork.OfflineMode = true;
     }
 
     private void HandleMultiplayerStartButtonClick()
